@@ -108,7 +108,17 @@ $days_until_deadline = null;
                     <label class="checkbox">
                         <a href="/">
                             <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
-                            <input class="checkbox__input visually-hidden" type="checkbox">
+                            
+                            <?php 
+                              $state="";
+
+                              if($show_complete_tasks) {
+                                $state=" checked";
+                              }
+
+                              echo "<input class='checkbox__input visually-hidden' type='checkbox'$state>";
+                            ?>
+
                             <span class="checkbox__text">Показывать выполненные</span>
                         </a>
                     </label>
@@ -116,21 +126,29 @@ $days_until_deadline = null;
 
                 <table class="tasks">
                     <!--показывать следующий тег <tr/>, если переменная равна единице-->
-                    <tr class="tasks__item task task--completed">
-                        <td class="task__select">
-                            <label class="checkbox task__checkbox">
-                                <input class="checkbox__input visually-hidden" type="checkbox" checked>
-                                <a href="/"><span class="checkbox__text">Сделать главную страницу Дела в порядке</span></a>
-                            </label>
+                    
+                    <?php
+                    
+                    $monthOftask = 4;
+                    $dayOftask = 10; 
+                    $yearOftask = 2017;
+                    $dateOftask = date("d.m.Y", mktime(1,1,1,$monthOftask,$dayOftask, $yearOftask));                    
 
-                        </td>
+                    if($show_complete_tasks) {
+                        echo "<tr class='tasks__item task task--completed'>
+                              <td class='task__select'>
+                                <label class='checkbox task__checkbox'>
+                                  <input class='checkbox__input visually-hidden' type='checkbox' checked>
+                                  <span class='checkbox__text>Сделать главную страницу Дела в порядке</span>
+                                </label>
+                              </td>
 
-                        <td class="task__file">
-                            <a class="download-link" href="#">Home.psd</a>
-                        </td>
+                              <td class='task__date'>$dateOftask</td>
 
-                        <td class="task__date"><!--выведите здесь дату выполнения задачи--></td>
-                    </tr>
+                              <td class='task__controls'></td>
+                              </tr>";
+                    }
+                    ?>
 
                     <tr class="tasks__item task">
                         <td class="task__select">
