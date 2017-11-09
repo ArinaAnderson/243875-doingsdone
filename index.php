@@ -139,10 +139,9 @@ $days_until_deadline = null;
                               <td class='task__select'>
                                 <label class='checkbox task__checkbox'>
                                   <input class='checkbox__input visually-hidden' type='checkbox' checked>
-                                  <span class='checkbox__text>Сделать главную страницу Дела в порядке</span>
+                                  <span class='checkbox__text'>Сделать главную страницу Дела в порядке</span>
                                 </label>
                               </td>
-
                               <td class='task__date'>$dateOftask</td>
 
                               <td class='task__controls'></td>
