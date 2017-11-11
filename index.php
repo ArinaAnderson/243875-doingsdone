@@ -129,9 +129,6 @@ $days_until_deadline = null;
                     
                     <?php
                     $dateOfTask = date('d.m.Y', strtotime('10.04.2017'));
-                    $dateDeadline = date("d.m.Y", $task_deadline_ts);
-                    $daysUntilDeadline = round(($task_deadline_ts-time())/(3600*24), 0, PHP_ROUND_HALF_DOWN);
-                    $taskImportant = "";
                     ?>                    
  
                     <?php if ($show_complete_tasks):?>
@@ -148,8 +145,11 @@ $days_until_deadline = null;
                         </tr>
                     <?php endif?>
                     
-                    <?php 
-                    if (($daysUntilDeadline < 0)||($daysUntilDeadline == 0)) {
+                    <?php
+                    $dateDeadline = date("d.m.Y", $task_deadline_ts);
+                    $daysUntilDeadline = round(($task_deadline_ts-time())/(3600*24), 0, PHP_ROUND_HALF_DOWN);
+                    $taskImportant = ""; 
+                    if ($daysUntilDeadline <= 0) {
                         $taskImportant = " task--important";
                     };
                     ?>
