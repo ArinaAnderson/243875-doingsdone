@@ -128,7 +128,7 @@ $days_until_deadline = null;
                     <!--показывать следующий тег <tr/>, если переменная равна единице-->
                     
                     <?php
-                    $dateOfTask = date('d.m.Y',strtotime('10.04.2017'));
+                    $dateOfTask = date('d.m.Y', strtotime('10.04.2017'));
                     ?>                    
  
                     <?php if ($show_complete_tasks):?>
@@ -145,19 +145,27 @@ $days_until_deadline = null;
                         </tr>
                     <?php endif?>
                     
-                    <tr class="tasks__item task">
-                        <td class="task__select">
-                            <label class="checkbox task__checkbox">
-                                <input class="checkbox__input visually-hidden" type="checkbox">
-                                <a href="/"><span class="checkbox__text">Выполнить домашнее задание</span></a>
-                            </label>
-                        </td>
+                    <?php
+                    $dateDeadline = date("d.m.Y", $task_deadline_ts);
+                    $daysUntilDeadline = round(($task_deadline_ts-time())/(3600*24), 0, PHP_ROUND_HALF_DOWN);
+                    $taskImportant = ""; 
+                    if ($daysUntilDeadline <= 0) {
+                        $taskImportant = " task--important";
+                    };
+                    ?>
 
-                        <td class="task__file">
-                        </td>
-
-                        <td class="task__date">21.03.2017</td>
-                    </tr>
+                    <?php 
+                    echo "<tr class='tasks__item task".$taskImportant."'>"
+                    ?>
+                            <td class="task__select">
+                                <label class='checkbox task__checkbox'>
+                                    <input class='checkbox__input visually-hidden' type='checkbox'>
+                                    <a href='/'><span class='checkbox__text'>Выполнить домашнее задание</span></a>
+                                </label>
+                            </td>
+                            <td class='task__file'></td>
+                            <td class='task__date'><?php echo $dateDeadline?></td>
+                        </tr>
                 </table>
             </main>
         </div>
