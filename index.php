@@ -14,6 +14,9 @@ $date_deadline = null;
 
 // в эту переменную запишите кол-во дней до даты задачи
 $days_until_deadline = null;
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -55,83 +58,25 @@ $days_until_deadline = null;
         <div class="content">
             <section class="content__side">
                 <h2 class="content__side-heading">Проекты</h2>
+                
 
                 <nav class="main-navigation">
                     <?php
                     $mainNavigation = [
-                        ["Все", 24],
-                        ["Входящие", 12],
-                        ["Учеба", 2],
-                        ["Работа", 3],
-                        ["Домашние дела", 5],
-                        ["Авто", 2]
-                        
+                        "Все",
+                        "Входящие",
+                        "Учеба",
+                        "Работа",
+                        "Домашние дела",
+                        "Авто"
                     ];
-                    
                     $keyCount = 0;
-                    echo "<ul class='main-navigation__list'>";  
-                    foreach ($mainNavigation as $key => $item) {
-                        $keyCount++;
-                        if ($keyCount === 1) {
-                            echo "<li class='main-navigation__list-item main-navigation__list-item--active'>";
-                        } else {
-                            echo "<li class='main-navigation__list-item'>";
-                        }
-                        
-                        echo "<a class='main-navigation__list-item-link' href='#'>".$item[0]."</a>";
-                        echo "<span class='main-navigation__list-item-count'>".$item[1]."</span>"; 
-                        echo "</li>";
-                    }
-                    echo "</ul";    
-                    ?>
-                </nav>
-
-                <a class="button button--transparent button--plus content__side-button" href="#">Добавить проект</a>
-            </section>
-
-            <main class="content__main">
-                <h2 class="content__main-heading">Список задач</h2>
-
-                <form class="search-form" action="index.html" method="post">
-                    <input class="search-form__input" type="text" name="" value="" placeholder="Поиск по задачам">
-
-                    <input class="search-form__submit" type="submit" name="" value="Искать">
-                </form>
-
-                <div class="tasks-controls">
-                    <nav class="tasks-switch">
-                        <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-                        <a href="/" class="tasks-switch__item">Повестка дня</a>
-                        <a href="/" class="tasks-switch__item">Завтра</a>
-                        <a href="/" class="tasks-switch__item">Просроченные</a>
-                    </nav>
-
-                    <label class="checkbox">
-                        <a href="/">
-                            <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
-                            
-                            <?php 
-                            $state = "";
-
-                            if ($show_complete_tasks) {
-                                $state = " checked";
-                            }
-
-                            echo "<input class='checkbox__input visually-hidden' type='checkbox'$state>";
-                            ?>
-
-                            <span class="checkbox__text">Показывать выполненные</span>
-                        </a>
-                    </label>
-                </div>
-
-                <?php
                     $tasks = [
                         [
                             "task" => "Собеседование в IT компании",
                             "deadline" => "01.06.2017",
                             "type" => "Работа",
-                            "indicator" => false
+                            "completed " => false
                         ],
                         [
                             "task" => "Выполнить тестовое задание",
@@ -166,54 +111,129 @@ $days_until_deadline = null;
                             "completed" => false
                         ]
                     ];
-
-                    
-
-                    echo "<table class='tasks'>";
-                    
-                    foreach ($tasks as $keyTask => $valueTask) {
-                        
-                        
-                        $taskDeadlineTs = strtotime((string)$valueTask['deadline']);
-                        
-                        $daysUntilDeadline = round(($taskDeadlineTs-time())/(3600*24), 0, PHP_ROUND_HALF_DOWN);
-                        $taskImportant = "";
-
-                        if (!empty($valueTask['deadline'])) {
-                            if ($daysUntilDeadline <= 0) {
-                                $taskImportant = " task--important";
-                            };
+                    function countOfElements($tableOfElements, $typeOfProject) {
+                        $countOfAll = 0;
+                        $countOfElement = 0;
+                        foreach ($tableOfElements as $groups) {
+                            $countOfAll ++;
+                            foreach ($groups as $key => $value) {
+                                if (strtoupper($value) === strtoupper($typeOfProject)) {
+                                    $countOfElement++;
+                                } 
+                            } 
                         }
-
-                        if ($valueTask['completed'] && $show_complete_tasks) {
-                            echo "<tr class='tasks__item task task--completed".$taskImportant."'>";
-                        } else { 
-                            echo "<tr class='tasks__item".$taskImportant."'>";
-                        };
-                        echo "<td class='task__select'>";
-                        echo "<label class='checkbox task__checkbox'>";
-                        echo "<input class='checkbox__input visually-hidden' type='checkbox' checked>";
-                        echo "<span class='checkbox__text'>".$valueTask['task']."</span>";
-                        echo "</label>";
-                        echo "</td>";
-                        echo "<td class='task__file'></td>";
-                        echo "<td class='task__date'>".$valueTask['deadline']."</td>";
-                        echo "<td class='task__type'>".$valueTask['type']."</td>";
-                        echo "<td class='task__controls'>";
-                        if($valueTask['completed']) {
-                            echo "Да";
+                        if ($typeOfProject === "Все") {
+                            return $countOfAll;
                         } else {
-                            echo "Нет";
-                        };
-                        echo "</td>";
-                        echo "</tr>";
+                            return $countOfElement; 
+                        }
                     };
-                    echo "</table>";
                     ?>
+
+                    <ul class='main-navigation__list'>
+                    
+                    <?php foreach ($mainNavigation as $item):?>
+                        <?php
+                        $keyCount++;
+                        
+                        $styleActiveMenuItem = "";
+                        if ($keyCount === 1) {
+                            $styleActiveMenuItem = ' main-navigation__list-item--active';
+                        } 
+                        ?> 
+                        
+                        <li class='main-navigation__list-item <?php echo $styleActiveMenuItem?>'>
+                        
+                            <a class='main-navigation__list-item-link' href='#'><?php echo $item?></a>
+                               <span class='main-navigation__list-item-count'><?php echo countOfElements($tasks, $item)?></span>
+                        </li>
+                    <?php endforeach?>
+                    </ul>    
+                </nav>
+
+                <a class="button button--transparent button--plus content__side-button" href="#">Добавить проект</a>
+            </section>
+
+            <main class="content__main">
+                <h2 class="content__main-heading">Список задач</h2>
+
+                <form class="search-form" action="index.html" method="post">
+                    <input class="search-form__input" type="text" name="" value="" placeholder="Поиск по задачам">
+
+                    <input class="search-form__submit" type="submit" name="" value="Искать">
+                </form>
+
+                <div class="tasks-controls">
+                    <nav class="tasks-switch">
+                        <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
+                        <a href="/" class="tasks-switch__item">Повестка дня</a>
+                        <a href="/" class="tasks-switch__item">Завтра</a>
+                        <a href="/" class="tasks-switch__item">Просроченные</a>
+                    </nav>
+
+                    <label class="checkbox">
+                        <a href="/">
+                            <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
+                            <?php 
+                              $state="";
+
+                              if($show_complete_tasks) {$state=" checked";}
+
+                              echo "<input class='checkbox__input visually-hidden' type='checkbox'$state>";
+                            ?>
+                         <!-- <input class="checkbox__input visually-hidden" type="checkbox">-->
+                            <span class="checkbox__text">Показывать выполненные</span>
+                        </a>
+                    </label>
+                </div>
+                
+                <table class='tasks'>
+                    <!--показывать следующий тег <tr/>, если переменная равна единице-->
+                    <?php foreach ($tasks as $valueTask):?> 
+                        <?php
+                        $taskDeadlineTs = strtotime((string)$valueTask['deadline']);
+                        $daysUntilDeadline = round(($taskDeadlineTs-time())/(3600*24), 0, PHP_ROUND_HALF_DOWN);
+                        $taskClass = "";
+
+                        if ($valueTask['completed']) {
+                            $taskClass = ' task--completed';
+                        } else {
+                            if ((!empty($valueTask['deadline'])) && ($daysUntilDeadline <= 0)) {
+                                    $taskClass = ' task--important';
+                            }
+                        }
+                        ?>
+
+                    <?php if (!$valueTask['completed'] || $show_complete_tasks) :?>
+                           
+                    <tr class='tasks__item task<?php echo $taskClass?>'>
+                        <td class='task__select'>
+                            <label class='checkbox task__checkbox'>
+                                <input class='checkbox__input visually-hidden' type='checkbox' checked>
+                                <span class='checkbox__text'><?php echo $valueTask['task']?></span>
+                            </label>
+                        </td>
+                        <td class='task__file'></td>
+                        <td class='task__date'><?php echo $valueTask['deadline']?></td>
+                        <td class='task__type'><?php echo $valueTask['type']?></td>
+                        <td class='task__controls'>
+                            <?php 
+                            if($valueTask['completed']) {
+                                echo "Да";
+                            } else {
+                                echo "Нет";
+                            };
+                            ?>
+                        </td>
+                    </tr>
+                    <?php endif; ?>
+                    <?endforeach?>
+                </table>
             </main>
         </div>
     </div>
 </div>
+
 
 <footer class="main-footer">
     <div class="container">
