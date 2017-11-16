@@ -215,8 +215,7 @@ $days_until_deadline = null;
                         </td>
                         <td class='task__file'></td>
                         <td class='task__date'><?php echo $valueTask['deadline']?></td>
-                        <td class='task__type'><?php echo $valueTask['type']?></td>
-                        <td class='task__controls'>
+                        <!--<td class='task__controls'>
                             <?php 
                             if($valueTask['completed']) {
                                 echo "Да";
@@ -224,7 +223,7 @@ $days_until_deadline = null;
                                 echo "Нет";
                             };
                             ?>
-                        </td>
+                        </td>-->
                     </tr>
                     <?php endif; ?>
                     <?endforeach?>
