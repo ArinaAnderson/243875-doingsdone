@@ -1,8 +1,5 @@
 ﻿<?php
-date_default_timezone_set('Europe/Moscow');
-
 $show_complete_tasks = rand(0, 1);
-
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -48,7 +45,15 @@ $show_complete_tasks = rand(0, 1);
                     <ul class='main-navigation__list'>
                     
                     <?php foreach ($mainNavigation as $item):?>
-                        <li class='main-navigation__list-item <?php echo classOfActive(1)?>'>
+                        <?php
+                        $keyCount++;
+                         
+                        $styleActiveMenuItem = "";
+                        if ($keyCount === 1) {
+                            $styleActiveMenuItem = ' main-navigation__list-item--active';
+                        } 
+                        ?> 
+                        <li class='main-navigation__list-item <?php echo $styleActiveMenuItem?>'>
                             <a class='main-navigation__list-item-link' href='#'><?php echo $item?></a>
                                <span class='main-navigation__list-item-count'><?php echo countOfElements($tasks, $item);?></span>
                         </li>

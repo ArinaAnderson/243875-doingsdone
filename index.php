@@ -2,7 +2,6 @@
                
 date_default_timezone_set('Europe/Moscow');
 
-$show_complete_tasks = rand(0, 1);
 require_once('functions.php');
 require_once('templates/data.php');
 
@@ -15,6 +14,3 @@ $layoutOfPage = getTemplate('templates/layout.php', [
 ]);
 
 print($layoutOfPage);
-/*
-$layout_of_page = require_once('layout.php');
-*/

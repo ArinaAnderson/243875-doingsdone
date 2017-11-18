@@ -1,4 +1,5 @@
-﻿                <h2 class="content__main-heading">Список задач</h2>
+﻿
+                <h2 class="content__main-heading">Список задач</h2>
 
                 <form class="search-form" action="index.html" method="post">
                     <input class="search-form__input" type="text" name="" value="" placeholder="Поиск по задачам">
@@ -18,11 +19,14 @@
                         <a href="/">
                             <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
                             <?php 
-                              $state="";
+                                $show_complete_tasks = rand(0, 1);
+                                $state="";
 
-                              if($show_complete_tasks) {$state=" checked";}
+                                if($show_complete_tasks) {
+                                    $state=" checked";
+                                };
 
-                              echo "<input class='checkbox__input visually-hidden' type='checkbox'$state>";
+                                echo "<input class='checkbox__input visually-hidden' type='checkbox'$state>";
                             ?>
                          <!-- <input class="checkbox__input visually-hidden" type="checkbox">-->
                             <span class="checkbox__text">Показывать выполненные</span>
@@ -34,14 +38,13 @@
                     <!--показывать следующий тег <tr/>, если переменная равна единице-->
                     <?php foreach ($tasks as $valueTask):?> 
                         <?php
-                        $taskDeadlineTs = strtotime((string)$valueTask['deadline']);
-                        $daysUntilDeadline = round(($taskDeadlineTs-time())/(3600*24), 0, PHP_ROUND_HALF_DOWN);
+                        
                         $taskClass = "";
 
                         if ($valueTask['completed']) {
                             $taskClass = ' task--completed';
                         } else {
-                            if ((!empty($valueTask['deadline'])) && ($daysUntilDeadline <= 0)) {
+                            if (deadlineCheck($valueTask['deadline'])) {
                                     $taskClass = ' task--important';
                             }
                         }
@@ -53,7 +56,7 @@
                         <td class='task__select'>
                             <label class='checkbox task__checkbox'>
                                 <input class='checkbox__input visually-hidden' type='checkbox' checked>
-                                <span class='checkbox__text'><?php echo $valueTask['task']?></span>
+                                <span class='checkbox__text'><?=htmlspecialchars($valueTask['task']);?></span>
                             </label>
                         </td>
                         <td class='task__file'></td>
