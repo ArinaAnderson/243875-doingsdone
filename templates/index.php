@@ -36,31 +36,31 @@
                 
                 <table class='tasks'>
                     <!--показывать следующий тег <tr/>, если переменная равна единице-->
-                    <?php foreach ($tasks as $valueTask):?> 
+                    <?php foreach ($tasks as $task):?> 
                         <?php
                         
                         $taskClass = "";
 
-                        if ($valueTask['completed']) {
+                        if ($task['completed']) {
                             $taskClass = ' task--completed';
                         } else {
-                            if (deadlineCheck($valueTask['deadline'])) {
+                            if (deadlineCheck($task['deadline'])) {
                                     $taskClass = ' task--important';
                             }
                         }
                         ?>
 
-                    <?php if (!$valueTask['completed'] || $show_complete_tasks) :?>
+                    <?php if (!$task['completed'] || $show_complete_tasks) :?>
                            
                     <tr class='tasks__item task<?php echo $taskClass?>'>
                         <td class='task__select'>
                             <label class='checkbox task__checkbox'>
                                 <input class='checkbox__input visually-hidden' type='checkbox' checked>
-                                <span class='checkbox__text'><?=htmlspecialchars($valueTask['task']);?></span>
+                                <span class='checkbox__text'><?=htmlspecialchars($task['task']);?></span>
                             </label>
                         </td>
                         <td class='task__file'></td>
-                        <td class='task__date'><?php echo $valueTask['deadline']?></td>
+                        <td class='task__date'><?php echo $task['deadline']?></td>
                     </tr>
                     <?php endif; ?>
                     <?endforeach?>
