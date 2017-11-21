@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 function  getTemplate($templateFile, $someArray) {
     if ($templateFile) {
         ob_start();//включаем буфер
@@ -6,11 +6,9 @@ function  getTemplate($templateFile, $someArray) {
         require_once($templateFile);
         return ob_get_clean();;
     } else {
-        return ""; //если нет указанного шаблона, вывести пустую строку
+        return ""; 
     } 
 }
-
-
 function countOfElements($tableOfElements, $typeOfProject) {
     $countOfAll = 0;
     $countOfElement = 0;
@@ -28,18 +26,6 @@ function countOfElements($tableOfElements, $typeOfProject) {
         return $countOfElement; 
     }
 }
-
- /*function classOfActive($numberOfLine) {
-    static $keyCount = 0;
-    $keyCount++;
-                        
-    $styleActiveMenuItem = "";
-    if ($keyCount === $numberOfLine) {
-        $styleActiveMenuItem = ' main-navigation__list-item--active';
-    }; 
-    return $styleActiveMenuItem;
-}*/
-
 function deadlineCheck($dateOfDeadline) {
     $taskDeadlineTs = strtotime((string)$dateOfDeadline);
     $daysUntilDeadline = round(($taskDeadlineTs - time())/(3600*24), 0, PHP_ROUND_HALF_DOWN);
