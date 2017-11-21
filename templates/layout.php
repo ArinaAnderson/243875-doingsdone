@@ -54,7 +54,7 @@ $show_complete_tasks = rand(0, 1);
                         } 
                         ?> 
                         <li class='main-navigation__list-item <?php echo $styleActiveMenuItem?>'>
-                            <a class='main-navigation__list-item-link' href='http://doingsdone.academy/index.php?project_id=<?=$key?>'><?php echo $item?></a>
+                            <a class='main-navigation__list-item-link' href='?project_id=<?=$key?>'><?php echo $item?></a>
                                <span class='main-navigation__list-item-count'><?php echo countOfElements($tasks, $item);?></span>
                         </li>
                     <?php endforeach?>
