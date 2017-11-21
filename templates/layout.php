@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $show_complete_tasks = rand(0, 1);
 ?>
 <!DOCTYPE html>
@@ -24,12 +24,12 @@ $show_complete_tasks = rand(0, 1);
                 <a class="main-header__side-item button button--plus" href="#">Добавить задачу</a>
 
                 <div class="main-header__side-item user-menu">
-                    <div class="user-menu__image"><!--data-->
+                    <div class="user-menu__image">
                         <img src="img/user-pic.jpg" width="40" height="40" alt="Пользователь">
                     </div>
 
                     <div class="user-menu__data">
-                        <p>Константин</p><!--data-->
+                        <p>Константин</p>
                         <a href="#">Выйти</a>
                     </div>
                 </div>
