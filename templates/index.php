@@ -48,7 +48,8 @@
                 <span class='checkbox__text'><?=htmlspecialchars($task['task']);?></span>
             </label>
         </td>
-        <td class='task__file'></td>
+        <td class='task__file'><?=htmlspecialchars($task['fileName'])?><?php $task['fileResolution']?></td>
+        <!--<td class='task__file'><?=$fileName //."." . $fileResolution?></td>-->
         <td class='task__date'><?php echo $task['deadline']?></td>
     </tr>
     <?php endif; ?>
