@@ -17,21 +17,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
     if (!count($errors)) {
-        if (isset($_FILES['preview']['name'])) { 
-            $fileType = "." . $_FILES['preview']['type'];
-            $res = move_uploaded_file($FILES['preview']['tmp-name'], $_SERVER['DOCUMENT_ROOT']); //сохраняем в корне проекта
-        }
-        
-        $dateInputString = "" . ($_POST['date']);
-        $dateInputTimeMark = strtotime($dateInputString);
-        $dateForm = date("d.m.Y", $dateInputTimeMark);
         $taskNewArray = [
             'task' => htmlspecialchars($_POST['name']),
-            'deadline' => htmlspecialchars($dateForm),
+            'deadline' => date("d.m.Y", strtotime($_POST['date'])),
             'type' => htmlspecialchars($_POST['project']),
-            'fileName' => htmlspecialchars($_FILES['preview']['name']),
-            'fileResolution' => htmlspecialchars($fileType)
         ];
+        
+
+        if (isset($_FILES['preview']['name'])) { 
+            $uploaddir = $_SERVER['DOCUMENT_ROOT'];
+            $uploadfile = $uploaddir . "/" . basename($_FILES['preview']['name']);
+            move_uploaded_file($_FILES['preview']['tmp_name'], $uploadfile);
+            if (move_uploaded_file($_FILES['preview']['tmp_name'], $uploadfile)) {
+                $taskNewArray['fileName'] = $_FILES['preview']['name'];
+            } 
+        }
+        
         array_unshift($tasks, $taskNewArray);
     }
 }
@@ -65,7 +66,8 @@ if (isset($_GET['project_id'])) {
 }
 
 $pageContent = getTemplate('templates/index.php', [
-    'tasks' => $taskList
+    'tasks' => $taskList,
+
 ]); 
 $layoutOfPage = getTemplate('templates/layout.php',  [
     'content' => $pageContent,
