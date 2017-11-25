@@ -11,7 +11,7 @@ $show_complete_tasks = rand(0, 1);
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body><!--class="overlay"-->
+<body class='<?=$bodyClass?>'><!--class="overlay"-->
 <h1 class="visually-hidden">Дела в порядке</h1>
 <div class="page-wrapper">
     <div class="container container--with-sidebar">
@@ -21,7 +21,7 @@ $show_complete_tasks = rand(0, 1);
             </a>
 
             <div class="main-header__side">
-                <a class="main-header__side-item button button--plus" href="#">Добавить задачу</a>
+                <a class="main-header__side-item button button--plus" href="../index.php?add">Добавить задачу</a>
 
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__image">
@@ -79,7 +79,7 @@ $show_complete_tasks = rand(0, 1);
             <p>Веб-приложение для удобного ведения списка дел.</p>
         </div>
 
-        <a class="main-footer__button button button--plus">Добавить задачу</a>
+        <a class='main-footer__button button button--plus' href='../index.php?add'>Добавить задачу</a>
 
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>
@@ -109,7 +109,8 @@ $show_complete_tasks = rand(0, 1);
         </div>
     </div>
 </footer>
-
+<?=$formTask;?>
+<!--
 <div class="modal" hidden>
     <button class="modal__close" type="button" name="button">Закрыть</button>
 
@@ -152,7 +153,7 @@ $show_complete_tasks = rand(0, 1);
             <input class="button" type="submit" name="" value="Добавить">
         </div>
     </form>
-</div>
+</div>-->
 
 <div class="modal" hidden>
     <button class="modal__close" type="button" name="button">Закрыть</button>
