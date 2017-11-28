@@ -4,6 +4,19 @@ date_default_timezone_set('Europe/Moscow');
 require_once('functions.php');
 require_once('templates/data.php');
 
+
+$show_complete_tasks = 0;
+if (isset($_GET['show_completed'])) {
+    $show_complete_tasks = intval($_GET['show_completed']);
+    setcookie('show_completed', $show_complete_tasks, strtotime("+ 1 day"), "/");
+    //header("Location: index.php");
+} else {
+    if (isset($_COOKIE['show_completed'])) {
+        $show_complete_tasks =  intval($_COOKIE['show_completed']);
+    }
+}
+
+
 $errors = []; 
 $bodyClass = "";
 $errorMessage = 'Заполните это поле';
@@ -67,6 +80,7 @@ if (isset($_GET['project_id'])) {
 
 $pageContent = getTemplate('templates/index.php', [
     'tasks' => $taskList,
+    'show_complete_tasks' => $show_complete_tasks
 
 ]); 
 $layoutOfPage = getTemplate('templates/layout.php',  [

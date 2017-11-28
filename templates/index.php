@@ -12,10 +12,9 @@
         <a href="/" class="tasks-switch__item">Просроченные</a>
     </nav>
     <label class="checkbox">
-        <a href="/">
+        <a href='?show_completed=<?=!(intval($show_complete_tasks))?>'>
         <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
         <?php 
-        $show_complete_tasks = rand(0, 1);
         $state="";
         if($show_complete_tasks) {
             $state=" checked";
