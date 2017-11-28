@@ -4,17 +4,12 @@ date_default_timezone_set('Europe/Moscow');
 require_once('functions.php');
 require_once('templates/data.php');
 
-$path = "/";
-$expire = strtotime("+1 day");
+
 $show_complete_tasks = 0;
 if (isset($_GET['show_completed'])) {
-    if ($_COOKIE['show_completed'] == 1) {
-            $show_complete_tasks = 0;
-        } else {
-            $show_complete_tasks = 1;
-        }
-    setcookie('show_completed', $show_complete_tasks, $expire, $path);
-    header("Location: index.php");
+    $show_complete_tasks = intval($_GET['show_completed']);
+    setcookie('show_completed', $show_complete_tasks, strtotime("+ 1 day"), "/");
+    //header("Location: index.php");
 } else {
     if (isset($_COOKIE['show_completed'])) {
         $show_complete_tasks =  intval($_COOKIE['show_completed']);
