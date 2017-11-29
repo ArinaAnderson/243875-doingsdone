@@ -17,8 +17,9 @@
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
 
+            <?php if (isset($_SESSION['user'])) :?>
             <div class="main-header__side">
-                <a class="main-header__side-item button button--plus" href="../index.php?add">Добавить задачу</a>
+                <a class="main-header__side-item button button--plus" href="index.php?add">Добавить задачу</a>
 
                 <div class="main-header__side-item user-menu">
                     <div class="user-menu__image">
@@ -27,17 +28,25 @@
 
                     <div class="user-menu__data">
                         <p>Константин</p>
-                        <a href="#">Выйти</a>
+                        <a href="?logout">Выйти</a>
                     </div>
                 </div>
             </div>
-        </header>
+            
+            <?php else: ?>
+            <div class="main-header__side">
+                <a class="main-header__side-item button button--transparent" href="index.php?=login">Войти</a>
+            </div>
 
+            <?php endif; ?>
+        </header>
+   
         <div class="content">
+            <?php if (isset($_SESSION['user'])):?>
             <section class="content__side">
                 <h2 class="content__side-heading">Проекты</h2>
                 
-
+  
                 <nav class="main-navigation">
                     <ul class='main-navigation__list'>
                     
@@ -59,6 +68,7 @@
                 </nav>
                 <a class="button button--transparent button--plus content__side-button" href="#">Добавить проект</a>
             </section>
+            <?php endif; ?>
 
             <main class="content__main">
                 <?=$content;?>
@@ -75,8 +85,12 @@
 
             <p>Веб-приложение для удобного ведения списка дел.</p>
         </div>
-
-        <a class='main-footer__button button button--plus' href='../index.php?add'>Добавить задачу</a>
+        
+        <?php if (isset($_SESSION['user'])) :?>
+        <a class='main-footer__button button button--plus' href='/index.php?add'>
+            Добавить задачу
+        </a>
+        <?php endif; ?>
 
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>
@@ -107,50 +121,9 @@
     </div>
 </footer>
 <?=$formTask;?>
-<!--
-<div class="modal" hidden>
-    <button class="modal__close" type="button" name="button">Закрыть</button>
 
-    <h2 class="modal__heading">Добавление задачи</h2>
+<?=$formEnter;?>
 
-    <form class="form"  action="index.html" method="post">
-        <div class="form__row">
-            <label class="form__label" for="name">Название <sup>*</sup></label>
-
-            <input class="form__input" type="text" name="name" id="name" value="" placeholder="Введите название">
-        </div>
-
-        <div class="form__row">
-            <label class="form__label" for="project">Проект <sup>*</sup></label>
-
-            <select class="form__input form__input--select" name="project" id="project">
-                <option value="">Входящие</option>
-            </select>
-        </div>
-
-        <div class="form__row">
-            <label class="form__label" for="date">Дата выполнения</label>
-
-            <input class="form__input form__input--date" type="date" name="date" id="date" value="" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
-        </div>
-
-        <div class="form__row">
-            <label class="form__label" for="preview">Файл</label>
-
-            <div class="form__input-file">
-                <input class="visually-hidden" type="file" name="preview" id="preview" value="">
-
-                <label class="button button--transparent" for="preview">
-                    <span>Выберите файл</span>
-                </label>
-            </div>
-        </div>
-
-        <div class="form__row form__row--controls">
-            <input class="button" type="submit" name="" value="Добавить">
-        </div>
-    </form>
-</div>-->
 
 <div class="modal" hidden>
     <button class="modal__close" type="button" name="button">Закрыть</button>

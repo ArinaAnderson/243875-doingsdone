@@ -17,7 +17,7 @@
                 echo $mistakeClass;
             }
             ?>'
-            type="text" name="name" id="name" value="" placeholder="Введите название">
+            type="text" name="name" id="name" value="<?=$nameValue;?>" placeholder="Введите название">
         </div>
 
         <div class="form__row">
@@ -57,7 +57,7 @@
                 echo $mistakeClass;
             }
             ?>'
-            type="date" name="date" id="date" value="" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
+            type="date" name="date" id="date" value="<?=$dateValue;?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
 
         </div>
 
