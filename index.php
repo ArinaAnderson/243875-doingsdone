@@ -1,4 +1,4 @@
-<?php              
+﻿<?php              
 date_default_timezone_set('Europe/Moscow');
  
 require_once('functions.php');
@@ -16,59 +16,82 @@ if (isset($_GET['show_completed'])) {
 }
 
 $errors = []; 
+$errorsEnter = [];
+
 $bodyClass = "";
+$sidebarBackground = ' container--with-sidebar';
+
 $errorMessage = 'Заполните это поле';
 $mistakeClass = ' form__input--error';
 $passwordMessage ='';
-
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $required = ['email', 'password'];
-    $rules = ['email' => 'validateEmail'];
-
-    foreach ($_POST as $key => $value) {
-        if (in_array($key, $required) && $value == '') {
-            $errors[] = $key;
-        }
-        if (in_array($key, $rules))  {
-            $result = validateEmail($value);
-            if (!$result) {
-                $errors[] = $key;
-            }
-        }
-    }
-
-    if ($user = searchUserByEmail($_POST['email'], $users)){
-        if (password_verify($_POST['password'], password_hash($user['password'], PASSWORD_DEFAULT))) {
-            session_start();
-            $_SESSION['user'] = $user;
-            $pageContent = getTemplate('templates/index.php', [
-            'tasks' => $taskList,
-            'show_complete_tasks' => $show_complete_tasks
-            ]); 
-
-        } else {
-            $passwordMessage = "Вы ввели неверный пароль";
-        }
-    }
-} else {
-    //такой пользователь не найден
-    $pageContent = getTemplate('templates/guest.php', [
-    ]); 
-}
-
+$emailMessage = '';
 $formEnterContent = '';
-if (isset($_GET['login']) || !empty($errors)) { 
-    $bodyClass = 'overlay';
-    $formEnterContent = getTemplate('templates/auth_form.php', [
-        'passwordMessage' => $passwordMessage,
-        'errors' => $errors
+
+
+if (isset($_SESSION['user'])) {  
+    $pageContent = getTemplate('templates/index.php', [
+        'tasks' => $taskList,
+        'show_complete_tasks' => $show_complete_tasks
     ]);
+} else { 
+    $bodyClass = 'body-background';
+    $sidebarBackground = '';
+    $pageContent = getTemplate('templates/guest.php', []);
+    if (isset($_GET['login'])) {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $required = ['email', 'password'];
+            $rules = ['email' => 'validateEmail'];
+            foreach ($_POST as $key => $value) {
+               if (in_array($key, $required)) {
+                    $errorsEnter[] = $key;
+                }
+                if (in_array($key, $rules)) {
+                    $validateResult = validateEmail($value);
+                    if (!$validateResult) {
+                        $errorsEnter[] = $key;
+                    }
+                } 
+            }
+            if (empty($errorsEnter) && ($user = searchUserByEmail($_POST['email'], $users))) {
+                if (password_verify($_POST['password'], password_hash($user['password']))) {
+                    session_start();
+                    $formEnterContent = '';
+                    $bodyClass = '';
+                    $sidebarBackground = ' container--with-sidebar';
+                    $_SESSION['user'] = $user;
+                    $pageContent = getTemplate('templates/index.php', [
+                        'tasks' => $taskList,
+                        'show_complete_tasks' => $show_complete_tasks
+                    ]);
+                } else {
+                    $passwordMessage = 'Вы ввели неверный пароль';
+                }
+            } else {
+                $formEnterContent = getTemplate('templates/auth_form.php', [
+                    'mistakeClass' => $mistakeClass,
+                    'errorsEnter' => $errorsEnter,
+                    'passwordMessage' => $passwordMessage,
+                    'emailMessage' => $emailMessage
+                ]);
+                $bodyClass = 'overlay';
+                $sidebarBackground = '';
+            }
+        } else {
+            $formEnterContent = getTemplate('templates/auth_form.php', [
+                'mistakeClass' => $mistakeClass,
+                'errorsEnter' => $errorsEnter,
+                'passwordMessage' => $passwordMessage,
+                'emailMessage' => $emailMessage
+            ]);
+            $bodyClass = 'overlay';
+            $sidebarBackground = '';
+        }
+    }
 }
 
 if (isset($_GET['logout'])) {
     unset($_SESSION['user']);
-    header("Location: /guest.php");
+    //header("Location: /guest.php");
 }
 
 
@@ -134,6 +157,8 @@ $layoutOfPage = getTemplate('templates/layout.php',  [
     'bodyClass' => $bodyClass,
     'formTask' => $formTaskContent,
     'formEnter' => $formEnterContent,
-    'user' => $user 
+    'user' => $user,
+    'users' => $users,
+    'sidebarBackground' => $sidebarBackground
 ]);
 print($layoutOfPage);

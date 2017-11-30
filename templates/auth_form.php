@@ -7,19 +7,31 @@
       <div class="form__row">
         <label class="form__label" for="email">E-mail <sup>*</sup></label>
 
-        <input class="form__input form__input--error" type="text" name="email" id="email" value="<?=$email?>" placeholder="Введите e-mail">
+        <input class='form__input
         <?php 
-        if (in_array('email', $errors)) {
+        if (in_array('email', $errorsEnter)) {
+            echo $mistakeClass;
+        }
+        ?>'
+        type="text" name="email" id="email" value="" placeholder="Введите e-mail">
+       
+        <?php 
+        if (in_array('email', $errorsEnter)) {
             echo "<p class='form__message'>E-mail введён некорректно</p>";
         }
         ?>
+        <p class='form__message'>
+            <?=$emailMessage;?>
+        </p>
       </div>
 
       <div class="form__row">
         <label class="form__label" for="password">Пароль <sup>*</sup></label>
-
-        <input class="form__input" type="password" name="password" id="password" value="<?=$password?>" placeholder="Введите пароль">
-        <?=$passwordMessage?>
+        <input class="form__input" type="password" name="password" id="password" value="" placeholder="Введите пароль">
+       
+        <p class='form__message'>
+            <?=$passwordMessage;?>
+        </p>
       </div>
 
       <div class="form__row form__row--controls">
