@@ -1,4 +1,4 @@
-﻿<div class="modal">
+<div class="modal">
     <button class="modal__close" type="button" name="button" >Закрыть</button>
 
     <h2 class="modal__heading">Добавление задачи</h2>
@@ -6,30 +6,32 @@
     <form class="form"  action="/index.php" method="post" enctype="multipart/form-data">
         <div class="form__row">
             <label class="form__label" for="name">Название <sup>*</sup></label>
-            <?php if (in_array('name', $errors)):?>
+            <?php if (in_array('name', $errors['add'])):?>
             <p class="form__message">
                 <?=$errorMessage?>
             </p>
             <?php endif; ?>
             <input class='form__input
             <?php 
-            if (in_array('name', $errors)) {
+            if (in_array('name', $errors['add'])) {
                 echo $mistakeClass;
             }
             ?>'
             type="text" name="name" id="name" value="<?=$nameValue;?>" placeholder="Введите название">
         </div>
+        
+        <input  type='hidden' name='action' value='add'>
 
         <div class="form__row">
             <label class="form__label" for="project">Проект <sup>*</sup></label>
-            <?php if (in_array('project', $errors)):?>
+            <?php if (in_array('project', $errors['add'])):?>
             <p class="form__message">
                 <?=$errorMessage?>
             </p>
             <?php endif; ?>
             <select class='form__input form__input--select
             <?php 
-            if (in_array('project', $errors)) {
+            if (in_array('project', $errors['add'])) {
                 echo $mistakeClass;
             }
             ?>'
@@ -46,14 +48,14 @@
         
         <div class="form__row">
             <label class="form__label" for="date">Дата выполнения</label>
-            <?php if (in_array('date', $errors)):?>
+            <?php if (in_array('date', $errors['add'])):?>
             <p class="form__message">
                 <?=$errorMessage?>
             </p>
             <?php endif; ?>
             <input class='form__input form__input--date
             <?php 
-            if (in_array('date', $errors)) {
+            if (in_array('date', $errors['add'])) {
                 echo $mistakeClass;
             }
             ?>'

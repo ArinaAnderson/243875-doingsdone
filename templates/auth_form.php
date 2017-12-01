@@ -9,31 +9,37 @@
 
         <input class='form__input
         <?php 
-        if (in_array('email', $errorsEnter)) {
+        if (in_array('email', $errors)) {
             echo $mistakeClass;
         }
         ?>'
         type="text" name="email" id="email" value="" placeholder="Введите e-mail">
        
-        <?php 
-        if (in_array('email', $errorsEnter)) {
+        <?php
+        if (in_array('email', $errors)) {
             echo "<p class='form__message'>E-mail введён некорректно</p>";
         }
         ?>
-        <p class='form__message'>
-            <?=$emailMessage;?>
-        </p>
       </div>
+
+      <input  type='hidden' name='action' value='login'>
 
       <div class="form__row">
         <label class="form__label" for="password">Пароль <sup>*</sup></label>
-        <input class="form__input" type="password" name="password" id="password" value="" placeholder="Введите пароль">
-       
-        <p class='form__message'>
-            <?=$passwordMessage;?>
-        </p>
+        <input class='form__input
+        <?php 
+        if (in_array('password', $errors)) {
+            echo $mistakeClass;
+        }
+        ?>'
+        ' type="password" name="password" id="password" value="" placeholder="Введите пароль">
+        <?php
+        if (in_array('wrong_password', $errors)) {
+            echo "<p class='form__message'>Такой пароль не найден</p>";
+        }
+        ?>
       </div>
-
+      
       <div class="form__row form__row--controls">
         <input class="button" type="submit" name="" value="Войти">
       </div>

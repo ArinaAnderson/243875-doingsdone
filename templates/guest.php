@@ -1,4 +1,5 @@
-﻿<section class="welcome">
+<div class="content">
+<section class="welcome">
     <h2 class="welcome__heading">«Дела в порядке»</h2>
 
     <div class="welcome__text">
@@ -9,3 +10,4 @@
 
     <a class="welcome__button button" href="#">Зарегистрироваться</a>
 </section>
+</div>

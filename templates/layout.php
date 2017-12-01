@@ -7,10 +7,25 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class='<?=$bodyClass?>'><!--class="overlay"-->
+<body class='
+<?php
+if (!empty($formTask) || !empty($formEnter)) {
+    echo "overlay";
+}
+if (!isset($_SESSION['user'])) {
+    echo " body-background";
+}
+?>
+'>
 <h1 class="visually-hidden">Дела в порядке</h1>
 <div class="page-wrapper">
-    <div class="container  <?=$sidebarBackground?>">
+    <div class='container
+    <?php
+    if (isset($_SESSION['user'])) {
+        echo " container--with-sidebar";
+    }
+    ?>
+    '>
         <header class="main-header">
             <a href="#">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">

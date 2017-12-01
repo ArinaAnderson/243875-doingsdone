@@ -13,7 +13,6 @@
     </nav>
     <label class="checkbox">
         <a href='?show_completed=<?=!(intval($show_complete_tasks))?>'>
-        <!--добавить сюда аттрибут "checked", если переменная $show_complete_tasks равна единице-->
         <?php 
         $state="";
         if($show_complete_tasks) {
@@ -21,13 +20,11 @@
         };
         echo "<input class='checkbox__input visually-hidden' type='checkbox'$state>";
         ?>
-        <!-- <input class="checkbox__input visually-hidden" type="checkbox">-->
             <span class="checkbox__text">Показывать выполненные</span>
         </a>
     </label>
 </div>
 <table class='tasks'>
-<!--показывать следующий тег <tr/>, если переменная равна единице-->
 <?php foreach ($tasks as $task):?> 
     <?php
     $taskClass = "";
