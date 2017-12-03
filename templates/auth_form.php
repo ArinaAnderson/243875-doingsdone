@@ -28,7 +28,7 @@
         <label class="form__label" for="password">Пароль <sup>*</sup></label>
         <input class='form__input
         <?php 
-        if (in_array('password', $errors)) {
+        if (in_array('password', $errors) || in_array('wrong_password', $errors))  {
             echo $mistakeClass;
         }
         ?>'

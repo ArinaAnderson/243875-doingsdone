@@ -14,7 +14,7 @@ $mistakeClass = ' form__input--error';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
     $requiredFields = [
-        'login' => ['email', 'password'],
+        'login' => ['email', 'password', 'wrong_password'],
         'add' => ['name', 'project', 'date']
     ];
     
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
             case 'login' :
                 $user = searchUserByEmail($_POST['email'], $users);
                 if (!$user || !password_verify($_POST['password'], password_hash($user['password'], PASSWORD_DEFAULT))) {
-                    $errors['action'][] = 'wrong_password';
+                    $errors[$action][] = 'wrong_password';
                 } else {
                     $_SESSION['user'] = $user;
                     header("Location: /index.php");
@@ -101,7 +101,7 @@ if (isset($_SESSION['user'])) {
         $formTaskContent = getTemplate('templates/add.php', [
             'mistakeClass' => $mistakeClass,
             'errorMessage' => $errorMessage,
-            'errors' => $errors['add'],
+            'errors' => $errors,
             'mainNavigation' => $mainNavigation 
         ]);
     }
@@ -116,7 +116,7 @@ if (isset($_SESSION['user'])) {
     if (isset($_GET['login']) || !empty($errors['login'])) {
         $formEnterContent = getTemplate('templates/auth_form.php', [
             'mistakeClass' => $mistakeClass,
-            'errors' => $errors['login'],
+            'errors' => $errors['login']
         ]); 
     }
 
@@ -124,8 +124,8 @@ if (isset($_SESSION['user'])) {
     $pageContent = getTemplate('templates/guest.php', []);
 }
 if (isset($_GET['logout'])) {
-    unset($_SESSION['user']);
-    header("Location: /index.php");
+    
+    header("Location: /logout.php");
 }
   
 $layoutOfPage = getTemplate('templates/layout.php',  [
