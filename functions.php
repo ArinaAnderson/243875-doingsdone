@@ -35,3 +35,16 @@ function deadlineCheck($dateOfDeadline) {
         return 0;
     }
 }
+function searchUserByEmail($email, $users) {
+    $result = false;
+    foreach ($users as $user) {
+        if ($user['email'] == $email) {
+            $result = $user;
+            break;
+        }
+    }
+    return $result;   
+}
+function validateEmail($value) {
+    return filter_var($value, FILTER_VALIDATE_EMAIL);
+}
