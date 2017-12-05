@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
         switch ($action) {
             case 'login' :
                 $user = searchUserByEmail($_POST['email'], $users);
-                if (!$user || !password_verify($_POST['password'], password_hash($user['password'], PASSWORD_DEFAULT))) {
+                if (!$user || !password_verify($_POST['password'], $user['password'])) {
                     $errors[$action][] = 'wrong_password';
                 } else {
                     $_SESSION['user'] = $user;
