@@ -1,10 +1,8 @@
-USE doingsdone_db;
+USE doingsdone;
 
-INSERT INTO users SET email='ignat.v@gmail.com', password='ug0GdVMi'; 
-INSERT INTO users SET email='kitty_93@li.ru', password='daecNazD'; 
-INSERT INTO users SET email='warrior07@mail.ru', password='oixb3aL8';  
-
-ALTER TABLE projects ADD user_id INT;
+INSERT INTO users SET name='Игнат', email='ignat.v@gmail.com', password='$2y$10$OqvsKHQwr0Wk6FMZDoHo1uHoXd4UdxJG/5UDtUiie00XaxMHrW8ka'; 
+INSERT INTO users SET name='Леночка', email='kitty_93@li.ru', password='$2y$10$bWtSjUhwgggtxrnJ7rxmIe63ABubHQs0AS0hgnOo41IEdMHkYoSVa'; 
+INSERT INTO users SET name='Руслан', email='warrior07@mail.ru', password='$2y$10$2OxpEH7narYpkOT1H5cApezuzh10tZEEQ2axgFOaKW.55LxIJBgWW';  
 
 INSERT INTO projects SET name='Все', user_id=1; 
 INSERT INTO projects SET name='Входящие', user_id=1;
@@ -13,17 +11,16 @@ INSERT INTO projects SET name='Работа', user_id=1;
 INSERT INTO projects SET name='Домашние дела', user_id=1;
 INSERT INTO projects SET name='Авто', user_id=1;
 
-ALTER TABLE tasks ADD user_id INT;
-ALTER TABLE tasks ADD completed TINYINT(1); /* 0  или 1*/
-
-INSERT INTO tasks SET name='Собеседование в IT компании', deadline='01.06.2017', project_id=4, user_id=1;
-INSERT INTO tasks SET name='Выполнить тестовое задание', deadline='25.05.2018', project_id=4, user_id=1;
-INSERT INTO tasks SET name='Сделать задание первого раздела', deadline='21.04.2018', project_id=3, user_id=1;
-INSERT INTO tasks SET name='Встреча с другом', deadline='22.04.2018', project_id=2, user_id=1;
-INSERT INTO tasks SET name='Купить корм для кота', deadline='01.06.2017', project_id=5, user_id=1;
-INSERT INTO tasks SET name='Заказать пиццу', deadline='01.06.2017', project_id=5, user_id=1;
+INSERT INTO tasks SET name='Собеседование в IT компании', deadline='2017.06.01', user_id=1, project_id=4, completed=0;
+INSERT INTO tasks SET name='Выполнить тестовое задание', deadline='2018.05.25', user_id=1, project_id=4, completed=0;
+INSERT INTO tasks SET name='Сделать задание первого раздела', deadline='2018.04.21', user_id=1, project_id=3, completed=1;
+INSERT INTO tasks SET name='Встреча с другом', deadline='2018.04.22', user_id=1, project_id=2, completed=0;
+INSERT INTO tasks SET name='Купить корм для кота', user_id=1, project_id=5, completed=0;
+INSERT INTO tasks SET name='Заказать пиццу', user_id=1, project_id=5, completed=0;
 
 
-
-
-
+SELECT name FROM projects WHERE user_id = 1; /*получить список из всех проектов для одного пользователя*/
+SELECT * FROM tasks WHERE project_id = 5; /*получить список из всех задач для одного проекта*/
+UPDATE tasks SET completed=1 WHERE id=4; /*пометить задачу как выполненную*/
+UPDATE tasks SET name='Встреча с котом' WHERE id=5; /*обновить название задачи по её идентификатору*/
+SELECT * FROM tasks WHERE deadline=(NOW()+INTERVAL 1 DAY); /*получить все задачи для завтрашнего дня*/
