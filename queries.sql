@@ -22,5 +22,5 @@ INSERT INTO tasks SET name='Заказать пиццу', user_id=1, project_id=
 SELECT name FROM projects WHERE user_id = 1; /*получить список из всех проектов для одного пользователя*/
 SELECT * FROM tasks WHERE project_id = 5; /*получить список из всех задач для одного проекта*/
 UPDATE tasks SET completed=1 WHERE id=4; /*пометить задачу как выполненную*/
-UPDATE tasks SET name='Встреча с котом' WHERE id=5; /*получить все задачи для завтрашнего дня*/
-SELECT MIN(deadline) FROM tasks WHERE deadline>CURDATE() AND completed=0; /*обновить название задачи по её идентификатору*/
+UPDATE tasks SET name='Встреча с котом' WHERE id=5; /*обновить название задачи по её идентификатору*/
+SELECT * FROM tasks WHERE deadline=(NOW()+INTERVAL 1 DAY); /*получить все задачи для завтрашнего дня*/
