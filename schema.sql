@@ -1,9 +1,11 @@
-CREATE DATABASE doingsdone;
+CREATE DATABASE doingsdone
+DEFAULT CHARACTER SET utf8
+DEFAULT COLLATE utf8_general_ci;
 USE doingsdone;
 
 CREATE TABLE users  (
 id INT AUTO_INCREMENT PRIMARY KEY,
-name CHAR,
+name TEXT,
 date_checkin DATE,
 email CHAR(64),
 password CHAR(255),
@@ -13,13 +15,13 @@ contacts CHAR(255)
 
 CREATE TABLE projects (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name CHAR(128),
+    name TEXT,
     user_id INT
 );
 
 CREATE TABLE tasks (
 id INT AUTO_INCREMENT PRIMARY KEY,
-name CHAR(128),
+name TEXT,
 dt_create DATE,
 dt_complete DATE,
 deadline DATE,
@@ -29,7 +31,6 @@ project_id INT,
 completed TINYINT(1)
 );
 
-
 CREATE UNIQUE INDEX email ON users(email);
-CREATE UNIQUE INDEX password ON users(password);
+
 
