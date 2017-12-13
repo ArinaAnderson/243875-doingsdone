@@ -33,4 +33,4 @@ completed TINYINT(1)
 
 CREATE UNIQUE INDEX email ON users(email);
 
-
+/*CREATE UNIQUE INDEX name ON projects(name);*/

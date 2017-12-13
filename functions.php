@@ -48,3 +48,10 @@ function searchUserByEmail($email, $users) {
 function validateEmail($value) {
     return filter_var($value, FILTER_VALIDATE_EMAIL);
 }
+function classOfActive($nameOfLine) { //$_GEST[’nane']        
+    $styleActiveMenuItem = "";
+    if ($projectItem['name'] == $nameOfLine) {
+        $styleActiveMenuItem = ' main-navigation__list-item--active';
+    }
+    return $styleActiveMenuItem;
+}

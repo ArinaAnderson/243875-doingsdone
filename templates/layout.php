@@ -12,16 +12,16 @@
 if (!empty($formTask) || !empty($formEnter)) {
     echo "overlay";
 }
-if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['user']) && !isset($_GET['register'])) { 
     echo " body-background";
-}
+} 
 ?>
 '>
 <h1 class="visually-hidden">Дела в порядке</h1>
 <div class="page-wrapper">
     <div class='container
     <?php
-    if (isset($_SESSION['user'])) {
+    if (isset($_SESSION['user']) || isset($_GET['register']))  {
         echo " container--with-sidebar";
     }
     ?>
@@ -48,10 +48,11 @@ if (!isset($_SESSION['user'])) {
             </div>
             
             <?php else: ?>
-            <div class="main-header__side">
-                <a class="main-header__side-item button button--transparent" href="index.php?login">Войти</a>
-            </div>
-
+                <?php if(!isset($_GET['register'])):?>
+                <div class="main-header__side">
+                    <a class="main-header__side-item button button--transparent" href="index.php?login">Войти</a>
+                </div>
+                <?php endif; ?>
             <?php endif; ?>
         </header>
    
@@ -59,29 +60,40 @@ if (!isset($_SESSION['user'])) {
             <?php if (isset($_SESSION['user'])):?>
             <section class="content__side">
                 <h2 class="content__side-heading">Проекты</h2>
-                
-  
                 <nav class="main-navigation">
                     <ul class='main-navigation__list'>
-                    
-                    <?php foreach ($mainNavigation as $key => $item):?>
-                        <?php
-                        $keyCount++;
-                         
-                        $styleActiveMenuItem = "";
-                        if ($keyCount === 1) {
-                            $styleActiveMenuItem = ' main-navigation__list-item--active';
-                        } 
-                        ?> 
-                        <li class='main-navigation__list-item <?php echo $styleActiveMenuItem?>'>
-                            <a class='main-navigation__list-item-link' href='?project_id=<?=$key?>'><?php echo $item?></a>
-                               <span class='main-navigation__list-item-count'><?php echo countOfElements($tasks, $item);?></span>
+
+                    <?php foreach ($projectsList as $projectItem):?>
+                        <li class='main-navigation__list-item 
+                        <?php 
+                        $styleActiveMenuItem = ' main-navigation__list-item--active';
+                        if (isset($_GET['project_name'])) {
+                            if ($projectItem['name'] == $_GET['project_name'])
+                            echo $styleActiveMenuItem;
+                        } else {
+                            if ($projectItem['name'] == 'Все') {
+                                echo $styleActiveMenuItem; 
+                            } 
+                        }
+                        ?>
+
+                        '>
+                            <a class='main-navigation__list-item-link' href='?project_name=<?=$projectItem['name'] ?>'><?=$projectItem['name']?></a>
+                               <span class='main-navigation__list-item-count'><?php echo countOfElements($taskArray, $projectItem['name']);?></span>
                         </li>
                     <?php endforeach?>
                     </ul>    
                 </nav>
                 <a class="button button--transparent button--plus content__side-button" href="#">Добавить проект</a>
             </section>
+
+            <?php else: ?>
+                <?php if(isset($_GET['register'])):?>
+                <section class="content__side">
+                    <p class="content__side-info">Если у вас уже есть аккаунт, авторизуйтесь на сайте</p>
+                    <a class="button button--transparent content__side-button" href="index.php?login">Войти</a>
+                </section>
+                <?php endif; ?>    
             <?php endif; ?>
 
             <main class="content__main">

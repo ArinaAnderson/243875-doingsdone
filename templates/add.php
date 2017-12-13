@@ -36,10 +36,10 @@
             }
             ?>'
             name="project" id="project">
-                <?php foreach ($mainNavigation as $item):?>
-                <?php if (!($item == 'Все')):?>
-                <option value="<?=$item?>">
-                    <?=$item?>  
+                <?php foreach ($projectsList as $item):?>
+                <?php if (!($item['name'] == 'Все')):?>
+                <option value="<?=$item['name']?>">
+                    <?=$item['name']?>  
                 </option>
                 <?php endif; ?>
                 <?php endforeach?>

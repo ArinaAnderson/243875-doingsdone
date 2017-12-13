@@ -25,27 +25,50 @@
     </label>
 </div>
 <table class='tasks'>
-<?php foreach ($tasks as $task):?> 
+<?php foreach ($taskFiltered as $task):?> 
     <?php
     $taskClass = "";
+    $taskId = $task['id'];
     if ($task['completed']) {
-    $taskClass = ' task--completed';
+        $taskClass = ' task--completed';
+        $checkedTask = 1;
+        if (isset($_GET['complete_task'])) {
+            $checkedTask = intval($_GET['complete_task']);
+            $sqlComplete = "UPDATE tasks SET completed = '0' WHERE id = '$taskId'";
+            $resultComplete = mysqli_query($link, $sqlComplete);
+        }
     } else {
+        $checkedTask = 0;
+        if (isset($_GET['complete_task'])) {
+            $checkedTask = intval($_GET['complete_task']);
+            $sqlComplete = "UPDATE tasks SET completed = '1' WHERE id = '$taskId'";
+            $resultComplete = mysqli_query($link, $sqlComplete);
+        }
         if (deadlineCheck($task['deadline'])) {
             $taskClass = ' task--important';
         }
     }
     ?>
+
     <?php if (!$task['completed'] || $show_complete_tasks) :?>
     <tr class='tasks__item task<?php echo $taskClass?>'>
         <td class='task__select'>
             <label class='checkbox task__checkbox'>
-                <input class='checkbox__input visually-hidden' type='checkbox' checked>
-                <span class='checkbox__text'><?=htmlspecialchars($task['task']);?></span>
+                <input class='checkbox__input visually-hidden' name='completed-task' type='checkbox' 
+                <?php
+                if ($checkedTask) {
+                    $taskChecked = ' checked';
+                } else {
+                    $taskChecked = '';
+                }
+                echo $taskChecked;
+                ?>
+                >
+                <a href='?complete_task=<?=!(intval($checkedTask))?>'><span class='checkbox__text'><?=htmlspecialchars($task['name']);?></span></a>
             </label>
         </td>
-        <td class='task__file'><?=htmlspecialchars($task['fileName'])?></td>
-        <td class='task__date'><?php echo $task['deadline']?></td>
+        <td class='task__file'><?=htmlspecialchars($task['file'])?></td>
+        <td class='task__date'><?php echo date('d.m.Y', strtotime($task['deadline']))?></td>
     </tr>
     <?php endif; ?>
 <?endforeach?>
